@@ -1,0 +1,65 @@
+body {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  height: 100vh;
+  background: #2c3539;
+  color: #fdfcfd;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  width: 75vw;
+  height: 10vh;
+  max-width: 650px;
+  max-height: 170px;
+  padding: 50px 30px 50px 20px;
+  background-color: #151922;
+  border-radius: 24px;
+}
+
+.card {
+  transition: all 1s ease;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.flipper:hover .card {
+  transform: rotateY(180deg);
+}
+
+.front,
+.back {
+  backface-visibility: hidden;
+  position: absolute;
+}
+
+.back {
+  text-align: end;
+  padding-top: 30px;
+  transform: rotateY(180deg);
+}
+
+.card p {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 30px;
+  opacity: 0.5;
+}
+
+.card h2 {
+  font-size: 26px;
+  font-weight: 400;
+  margin-top: 0;
+  margin-right: 30px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.75;
+}
