@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배재대학교 학과 캘린더</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      /* 네비게이션 바 전체를 왼쪽 상단에 고정시킵니다. */
+      .navbar {
+        position: sticky; /* 고정 위치 */
+        top: 0; /* 상단에서 0px 위치 */
+        left: 0; /* 왼쪽에서 0px 위치 */
+        right: auto; /* 오른쪽 자동 해제 */
+        width: 100%; /* 너비 100% */
+        background-color: #f8f9fa; /* 배경색 */
+        padding: 10px 20px; /* 위아래 10px, 좌우 20px 패딩 */
+        display: flex; /* Flexbox 사용 */
+        justify-content: space-between; /* 요소 간 공간을 최대로 확보하여 정렬 */
+        align-items: center; /* 수직 정렬 */
+        z-index: 1000; /* 새로운 바가 위에 올 수 있도록 설정 */
+      }
+
+      /* 네비게이션 바 링크를 담고 있는 컨테이너를 오른쪽 정렬합니다. */
+      #navbarNav {
+        justify-content: flex-end; /* Flexbox 사용하여 오른쪽 정렬 */
+      }
+
+      /* 네비게이션 바 브랜드 링크 스타일 */
+      .navbar-brand {
+        font-weight: bold; /* 굵게 */
+        color: #333; /* 글자색 */
+      }
+
+      /* 네비게이션 바 링크 스타일 */
+      .nav-link {
+        color: #333; /* 글자색 */
+        padding: 10px 20px; /* 위아래 10px, 좌우 20px 패딩 */
+        border-right: 1px solid #ccc; /* 일자 모양 추가 */
+      }
+
+      /* 학과 캘린더 보기 링크 스타일 */
+      .nav-link.custom-link {
+        color: black; /* 파란색 */
+      }
+
+      /* 오른쪽 상단 이미지 스타일 */
+      .top-right-image {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+      .wrapper {
+        margin: 20px 20px 20px 20px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        background-color: #e7e7e7;
+      }
+      .calendar {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        font-size: 16px; /* 텍스트 크기를 조정합니다. */
+      }
+      .btnContainer {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: #f8f9fa;
+        margin-bottom: 20px;
+        width: 500px;
+        height: 80px;
+      }
+      .btnContainer > button {
+        border: none;
+        border-radius: 10px;
+        background-color: #ccc;
+        width: 200px;
+        height: 50px;
+      }
+      .calContent {
+        background-color: #f8f9fa;
+        width: 500px;
+        height: 300px;
+      }
+      .dateContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #f8f9fa;
+        width: 500px;
+        height: 50px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .detail {
+        width: auto;
+        height: 670px;
+        font-size: 16px; /* 텍스트 크기를 조정합니다. */
+        display: flex; /* 요소들을 행으로 배치합니다. */
+        flex-direction: column; /* 요소들을 세로로 배치합니다. */
+        align-items: flex-start; /* 요소들을 왼쪽으로 정렬합니다. */
+      }
+      .detail p {
+        background-color: #f8f9fa;
+        margin: 5px 0; /* 마진을 조정합니다. */
+        padding: 5px; /* 내부 여백을 추가합니다. */
+      }
+      .border {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        min-width: 300px;
+        margin: 10px;
+        padding: 10px; /* 내부 여백을 추가합니다. */
+        box-sizing: border-box; /* 테두리를 기준으로 크기를 계산합니다. */
+        font-size: 16px; /* 텍스트 크기를 조정합니다. */
+        margin-bottom: 10px; /* 아래쪽 여백을 추가합니다. */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="/">We.Note</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <img src="Hamburger_icon.jpg" alt="햄버거 바" width="30" height="30" />
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link custom-link" href="/">홈</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.login') }}">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.register') }}"
+              >회원가입</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="wrapper">
+      <div class="calendar">
+        <div class="btnContainer">
+          <button class="majorCal">학과 캘린더</button>
+          <button class="groupCal">그룹 캘린더</button>
+        </div>
+        <div class="dateContainer">
+          <span>일요일</span>
+          <span>월요일</span>
+          <span>화요일</span>
+          <span>수요일</span>
+          <span>목요일</span>
+          <span>금요일</span>
+        </div>
+        <div class="calContent">
+          <!-- None -->
+        </div>
+      </div>
+      <div class="detail">
+        <div class="border">
+          <p>아이디:</p>
+          <p>학과:</p>
+          <p>소속 그룹:</p>
+        </div>
+        <div class="border">
+          <p>그룹 초대 코드 생성</p>
+        </div>
+        <div class="border">
+          <p>초대 코드 등록</p>
+        </div>
+        <div class="border">
+          <p>그룹 캘린더</p>
+        </div>
+        <div class="border">
+          <p>학과 캘린더</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
